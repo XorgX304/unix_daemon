@@ -26,6 +26,10 @@ THE SOFTWARE.
 '''
 
 import os
+import errno
+
+
+__all__ = ['daemon']
 
 
 def daemon(nochdir=False, noclose=False):
@@ -60,33 +64,19 @@ def daemon(nochdir=False, noclose=False):
     if not nochdir:
         os.chdir('/')
 
-    # close stdin, stdout, stderr
     if not noclose:
-        # stdin
-        try:
-            os.close(0)
-        except OSError:
-            # Do nothing if the descriptor has already closed.
-            pass
-        finally:
-            os.open(os.devnull, os.O_RDONLY)
+        # close stdin, stdout, stderr
+        for i in xrange(3):
+            try:
+                os.close(i)
+            except OSError as e:
+                # Do nothing if the descriptor has already closed.
+                if e.errno == errno.EBADF:
+                    pass
 
-        # stdout
-        try:
-            os.close(1)
-        except OSError:
-            # Do nothing if the descriptor has already closed.
-            pass
-        finally:
-            os.open(os.devnull, os.WRONLY)
-
-        # stderr
-        try:
-            os.close(2)
-        except OSError:
-            # Do nothing if the descriptor has already closed.
-            pass
-        finally:
-            os.dup(1)
+        # Open /dev/null for stdin, stdout, stderr
+        os.open(os.devnull, os.O_RDONLY)  # stdin
+        os.open(os.devnull, os.O_WRONLY)  # stdout
+        os.dup(1)                         # stderr
 
     return os.getpid()
