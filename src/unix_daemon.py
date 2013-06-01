@@ -2,8 +2,6 @@
 '''
 daemon module emulating BSD Daemon(3)
 
-The MIT License (MIT)
-
 Copyright (c) 2013 wbcchsyn
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
