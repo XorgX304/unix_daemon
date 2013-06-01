@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-daemon module emulating Linux Daemon(3)
+daemon module emulating BSD Daemon(3)
 
 The MIT License (MIT)
 

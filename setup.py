@@ -28,7 +28,7 @@ from setuptools import setup
 setup(
     name='unix_daemon',
     version='0.1.0',
-    description='daemon module emulating Linux Daemon(3)',
+    description='daemon module emulating BSD Daemon(3)',
     author='wbcchsyn',
     author_email='wbcchsyn@gmail.com',
     url='https://github.com/wbcchsyn/python-daemon',
