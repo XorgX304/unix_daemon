@@ -26,18 +26,19 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from setuptools import setup
 
 setup(
-    name='daemon',
+    name='unix_daemon',
     version='0.1.0',
-    description='daemon module emulating Linux Daemon(3)',
+    description='daemon module emulating BSD Daemon(3)',
     author='wbcchsyn',
     author_email='wbcchsyn@gmail.com',
     url='https://github.com/wbcchsyn/python-daemon',
-    long_description='',
-    py_modules=['daemon'],
+    long_description=file('docs/README.rst').read(),
+    platforms=['linux', 'unix'],
+    py_modules=['unix_daemon'],
     package_dir={"": "src"},
     license=['MIT License'],
     classifiers=[
-        "Development Status :: 3 - Alpha",
+        "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python",

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 '''
-daemon module emulating Linux Daemon(3)
-
-The MIT License (MIT)
+daemon module emulating BSD Daemon(3)
 
 Copyright (c) 2013 wbcchsyn
 
