@@ -26,14 +26,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 from setuptools import setup
 
 setup(
-    name='daemon',
+    name='unix_daemon',
     version='0.1.0',
     description='daemon module emulating Linux Daemon(3)',
     author='wbcchsyn',
     author_email='wbcchsyn@gmail.com',
     url='https://github.com/wbcchsyn/python-daemon',
     long_description='',
-    py_modules=['daemon'],
+    py_modules=['unix_daemon'],
     package_dir={"": "src"},
     license=['MIT License'],
     classifiers=[
