@@ -65,9 +65,10 @@ The process become a daemon and start to run background.
 
 Development
 ^^^^^^^^^^^
-Before developing, copy pre-commit hook from repository.
+Install requirements to developing copy pre-commit hook from repository.
 ::
 
   $ git clone git@github.com:wbcchsyn/unix_daemon.git
   $ cd unix_daemon
+  $ pip install -r requirements.txt
   $ cp -p utils/pre-commit .git/hook/
