@@ -7,12 +7,14 @@ unix_daemon
 
 Requirements
 ^^^^^^^^^^^^
-* Python 2.7
+* Python 2.6 or 2.7
 * Unix or Linux platform.
 
-Tested at
+Tested
 ^^^^^^^^^
 * Ubuntu 12.04 (x86_64)
+* CentOS 6.4 (x86_64)
+* Mac OS X 10.9
 
 Setup
 ^^^^^
