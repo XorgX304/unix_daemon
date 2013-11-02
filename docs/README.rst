@@ -47,7 +47,7 @@ The process become a daemon and start to run background.
   Note
     | This function call fork internally to detach tty safely.
     | Be careful to call this function when the more than two threads is run.
-    | (The best way is call this function before create a new thread.)
+    | (It is a good idea to call this function before creating a new thread.)
 
   Example
     Call unix_daemon.daemon(), then the process run backgrond.
