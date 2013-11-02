@@ -18,11 +18,17 @@ Tested
 
 Setup
 ^^^^^
-::
+* Install using pip
+  ::
 
-  $ git clone git@github.com:wbcchsyn/unix_daemon.git
-  $ cd unix_daemon
-  $ sudo python setup.py install
+  $ sudo pip install unix_daemon
+
+* Install from git.  
+  ::
+
+    $ git clone git@github.com:wbcchsyn/unix_daemon.git
+    $ cd unix_daemon
+    $ sudo python setup.py install
 
 Usage
 ^^^^^
@@ -61,9 +67,10 @@ The process become a daemon and start to run background.
 
       pid = unix_daemon.daemon()
       with file('/tmp/foo', 'a') as f:
+          print('pid: %s\n' % os.getpid())
           f.write('new pid: %s\n' % pid)
 
-    You can see the process id changes.
+    You can see the process id changes and the 2nd print is not displayed.
 
 Development
 ^^^^^^^^^^^
@@ -72,5 +79,5 @@ Install requirements to developing copy pre-commit hook from repository.
 
   $ git clone git@github.com:wbcchsyn/unix_daemon.git
   $ cd unix_daemon
-  $ pip install -r requirements.txt
-  $ cp -p utils/pre-commit .git/hook/
+  $ pip install -r dev_utils/requirements.txt
+  $ cp -p dev_utils/pre-commit .git/hook/
