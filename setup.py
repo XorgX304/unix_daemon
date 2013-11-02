@@ -22,9 +22,9 @@ from setuptools import setup
 
 setup(
     name='unix_daemon',
-    version='0.1.0',
+    version='0.1.1',
     description='daemon module emulating BSD Daemon(3)',
-    author='wbcchsyn',
+    author='Yoshida Shin',
     author_email='wbcchsyn@gmail.com',
     url='https://github.com/wbcchsyn/python-daemon',
     long_description=file('docs/README.rst').read(),

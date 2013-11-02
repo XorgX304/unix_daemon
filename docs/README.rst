@@ -7,12 +7,14 @@ unix_daemon
 
 Requirements
 ^^^^^^^^^^^^
-* Python 2.7
+* Python 2.6 or 2.7
 * Unix or Linux platform.
 
-Tested at
+Tested
 ^^^^^^^^^
 * Ubuntu 12.04 (x86_64)
+* CentOS 6.4 (x86_64)
+* Mac OS X 10.9
 
 Setup
 ^^^^^
@@ -45,7 +47,7 @@ The process become a daemon and start to run background.
   Note
     | This function call fork internally to detach tty safely.
     | Be careful to call this function when the more than two threads is run.
-    | (The best way is call this function before create a new thread.)
+    | (It is a good idea to call this function before creating a new thread.)
 
   Example
     Call unix_daemon.daemon(), then the process run backgrond.
