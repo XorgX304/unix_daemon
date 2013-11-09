@@ -18,8 +18,7 @@ limitations under the License.
 
 from setuptools import setup
 
-long_description = file('docs/README.rst').read() + \
-    file('docs/USAGE.rst').read()
+long_description = file('docs/README.rst').read()
 
 classifiers = [
     "Development Status :: 4 - Beta",
