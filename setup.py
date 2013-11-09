@@ -1,8 +1,6 @@
 #-*- coding: utf-8 -*-
 
 '''
-Copyright 2013, wbcchsyn
-
 Copyright 2013 Yoshida Shin
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,25 +18,32 @@ limitations under the License.
 
 from setuptools import setup
 
+long_description = file('docs/README.rst').read() + \
+    file('docs/USAGE.rst').read()
+
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 2.6",
+    "Programming Language :: Python :: 2.7",
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    ]
+
 setup(
     name='unix_daemon',
     version='0.1.2',
     description='Function emulating Daemon(3) on Linux and Unix OS.',
+    long_description=long_description,
     author='Yoshida Shin',
     author_email='wbcchsyn@gmail.com',
     url='https://github.com/wbcchsyn/unix_daemon',
-    long_description=file('README.rst').read(),
     platforms=['linux', 'unix'],
     py_modules=['unix_daemon'],
     package_dir={"": "src"},
     license=['Apache License 2.0'],
-    classifiers=[
-        "Development Status :: 4 - Beta",
-        "Intended Audience :: Developers",
-        "License :: OSI Approved :: Apache Software License",
-        "Programming Language :: Python",
-        "Topic :: Software Development",
-        "Topic :: Software Development :: Libraries",
-        "Topic :: Software Development :: Libraries :: Python Modules"
-    ]
+    classifiers=classifiers,
 )
