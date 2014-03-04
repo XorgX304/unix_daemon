@@ -38,12 +38,11 @@ The process become a daemon and start to run background.
 
   Arguments
     | If argument 1 'nochdir' is False, the process changes the calling process's current working directory to the root directory ("/");
-    | Otherwise, the current working directory is left unchanged.
+    | otherwise, the current working directory is left unchanged.
     | The default value of the nochdir is False.
 
-    | If argument 2 'noclose' is False, this function close file descriptor 0, 1 and 2, and then reopen /dev/null for file descriptor 0, 1 and 2.
-    | /dev/null is opened even if some of the file descriptors are closed before called this function.
-    | If the value is True, file descriptor 0, 1, and 2 are left.
+    | If argument 2 'noclose' is False, this function redirects stdin, stdout and stderr to /dev/null;
+    | otherwise, leaves them.
     | The default value is False.
 
 
@@ -52,7 +51,7 @@ The process become a daemon and start to run background.
 
   Note
     | This function call fork internally to detach tty safely.
-    | Be careful to call this function when the more than two threads is run.
+    | Be careful to call this function when two or more than two threads is run.
     | (It is a good idea to call this function before creating a new thread.)
 
   Example

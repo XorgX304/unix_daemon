@@ -18,6 +18,7 @@ limitations under the License.
 '''
 
 import os
+import sys
 import errno
 
 
@@ -33,8 +34,8 @@ def daemon(nochdir=False, noclose=False):
          The Default of nochdir is False.
 
          If  argument `noclose' is False,
-         this function close file descriptor 0, 1 and 2 and reopen /dev/null;
-         otherwise, leave them.
+         this function redirects stdin, stdout and stderr to /dev/null;
+         otherwise, leaves them.
          The defult value of noclose is False.
 
          daemon returns the pid of new process.
@@ -57,18 +58,34 @@ def daemon(nochdir=False, noclose=False):
         os.chdir('/')
 
     if not noclose:
-        # close stdin, stdout, stderr
-        for i in xrange(3):
-            try:
-                os.close(i)
-            except OSError as e:
-                # Do nothing if the descriptor has already closed.
-                if e.errno == errno.EBADF:
-                    pass
+        # Close stdin, stdout and stderr
+        for f in (sys.stdin, sys.stdout, sys.stderr):
+            if f.closed:
+                # Skip if the file is already closed.
+                continue
 
-        # Open /dev/null for stdin, stdout, stderr
-        os.open(os.devnull, os.O_RDONLY)  # stdin
-        os.open(os.devnull, os.O_WRONLY)  # stdout
-        os.dup(1)                         # stderr
+            fd = f.fileno()
+            f.close()
+            try:
+                # Make sure to close the file descriptor.
+                os.close(fd)
+            except OSError as e:
+                if e.errno == errno.EBADF:
+                    # Do nothing if the descriptor has already closed.
+                    pass
+                else:
+                    raise
+
+        # Redirect stdin to /dev/null
+        stdin = os.open(os.devnull, os.O_RDONLY)
+        sys.stdin = os.fdopen(stdin, 'r')
+
+        # Redirect stdout to /dev/null
+        stdout = os.open(os.devnull, os.O_WRONLY|os.O_APPEND)
+        sys.stdout = os.fdopen(stdout, 'a')
+
+        # Redirect stderr to /dev/null
+        stderr = os.dup(sys.stdout.fileno())
+        sys.stderr = os.fdopen(stderr, 'a')
 
     return os.getpid()

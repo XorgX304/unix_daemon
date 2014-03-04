@@ -30,7 +30,7 @@ classifiers = [
     "Topic :: Software Development",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    ]
+]
 
 setup(
     name='unix_daemon',
