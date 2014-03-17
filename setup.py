@@ -34,7 +34,7 @@ classifiers = [
 
 setup(
     name='unix_daemon',
-    version='0.1.2',
+    version='0.1.3',
     description='Function emulating Daemon(3) on Linux and Unix OS.',
     long_description=long_description,
     author='Yoshida Shin',
