@@ -18,7 +18,6 @@ limitations under the License.
 '''
 
 import os
-import sys
 import errno
 
 
@@ -28,17 +27,29 @@ __all__ = ['daemon']
 def daemon(nochdir=False, noclose=False):
     r''' Fork twice and become a daemon.
 
-         If argument `nochdir' is False, this process changes the calling
-         process's current working directory to the root directory ("/");
-         otherwise, the current working directory is left unchanged.
-         The Default of nochdir is False.
+    If argument `nochdir' is False, this process changes the calling process's
+    current working directory to the root directory ("/");
+    otherwise, the current working directory is left unchanged.
+    The Default of nochdir is False.
 
-         If  argument `noclose' is False,
-         this function redirects stdin, stdout and stderr to /dev/null;
-         otherwise, leaves them.
-         The defult value of noclose is False.
+    If  argument `noclose' is False, this function close file descriptors 0, 1
+    and 2 and redirect them to /dev/null. Even if some of them are closed, this
+    function open these file descriptors and redirect to /dev/null if noclose
+    is False.
+    The defult value of noclose is False.
 
-         daemon returns the pid of new process.
+    This function returns the pid of new process.
+
+    This function call fork internally to detach tty safely.
+    Be careful to call this function when two or more than two python threads
+    are running.
+
+    Normary, file descriptors 0, 1 and 2 are correspond to stdin, stdout and
+    stderr. However, even if any of these file discriptors refer to something
+    else, they will still be closed when argument `noclose' is False.
+
+    It is a good idea to call this function before creating any threads and
+    before opening any files or sockets.
     '''
 
     ## 1st fork
@@ -59,15 +70,8 @@ def daemon(nochdir=False, noclose=False):
 
     if not noclose:
         # Close stdin, stdout and stderr
-        for f in (sys.stdin, sys.stdout, sys.stderr):
-            if f.closed:
-                # Skip if the file is already closed.
-                continue
-
-            fd = f.fileno()
-            f.close()
+        for fd in range(3):
             try:
-                # Make sure to close the file descriptor.
                 os.close(fd)
             except OSError as e:
                 if e.errno == errno.EBADF:
@@ -77,15 +81,12 @@ def daemon(nochdir=False, noclose=False):
                     raise
 
         # Redirect stdin to /dev/null
-        stdin = os.open(os.devnull, os.O_RDONLY)
-        sys.stdin = os.fdopen(stdin, 'r')
+        os.open(os.devnull, os.O_RDONLY)
 
         # Redirect stdout to /dev/null
-        stdout = os.open(os.devnull, os.O_WRONLY|os.O_APPEND)
-        sys.stdout = os.fdopen(stdout, 'a')
+        os.open(os.devnull, os.O_WRONLY)
 
         # Redirect stderr to /dev/null
-        stderr = os.dup(sys.stdout.fileno())
-        sys.stderr = os.fdopen(stderr, 'a')
+        os.dup(1)
 
     return os.getpid()

@@ -44,18 +44,21 @@ The process become a daemon and start to run background.
     | otherwise, the current working directory is left unchanged.
     | The default value of the nochdir is False.
 
-    | If argument 2 'noclose' is False, this function redirects stdin, stdout and stderr to /dev/null;
-    | otherwise, leaves them.
-    | The default value is False.
-
+    | If argument 2 'noclose' is False, this function close file descriptors 0, 1 and 2 and redirect them to /dev/null.
+    | Even if some of them have been closed, this function open these file descriptors and redirect to /dev/null if noclose is False.
+    | The defult value of noclose is False.
 
   Return Value
     daemon returns the pid of new process.
 
   Note
     | This function call fork internally to detach tty safely.
-    | Be careful to call this function when two or more than two threads is running.
-    | (It is a good idea to call this function before creating a new thread.)
+    | Be careful to call this function when two or more than two python threads are running.
+
+    | Normary, file descriptors 0, 1 and 2 are correspond to stdin, stdout and stderr.
+    | However, even if any of these file discriptors refer to something else, they will still be closed when argument 'noclose' is False.
+
+    | It is a good idea to call this function before creating any threads and before opening any files or sockets.
 
   Example
     Call unix_daemon.daemon(), then the process run backgrond.
@@ -78,6 +81,7 @@ Development
 ^^^^^^^^^^^
 
 Install requirements to developing copy pre-commit hook from repository.
+
 ::
 
   $ git clone https://github.com/wbcchsyn/unix_daemon.git
