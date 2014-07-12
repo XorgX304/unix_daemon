@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 '''
-daemon module emulating BSD Daemon(3)
-
 Copyright 2014 Yoshida Shin
 
 Licensed under the Apache License, Version 2.0 (the "License");
