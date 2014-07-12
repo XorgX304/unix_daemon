@@ -2,22 +2,23 @@ unix_daemon
 ===========
 | unix_daemon is a python module emulating BSD daemon(3).
 | This module provides a function named daemon.
-| If this function is called, the process become a daemon and start to run background.
+| If this function is called, the process become a daemon and start to run
+| background.
 
 
 Requirements
 ^^^^^^^^^^^^
-* Python 2.6 or 2.7 or 3.2 or 3.3
+* Python 2.6 or later, or Python 3.x
 * Unix or Linux platform.
 
-Tested
-^^^^^^^^^
-* Python 2.7 on Ubuntu 12.04 (x86_64)
-* Python 2.6 on CentOS 6.4 (x86_64)
-* Python 2.7 on Mac OS X 10.9
-
-* Python 3.2 on Ubuntu 12.04 (x86_64)
-* Python 3.3 on Mac OS X 10.9
+Test
+^^^^
+* Python 2.6.9
+* Python 2.7.8
+* Python 3.1.5
+* Python 3.2.5
+* Python 3.3.5
+* Python 3.4.1
 
 Setup
 ^^^^^
@@ -26,7 +27,7 @@ Setup
 
     $ sudo pip install unix_daemon
 
-* Install from git.  
+* Install from git.
   ::
 
     $ git clone https://github.com/wbcchsyn/unix_daemon.git
@@ -37,31 +38,37 @@ Usage
 ^^^^^
 unix_daemon.daemon(nochdir=False, noclose=False)
 ------------------------------------------------
-The process become a daemon and start to run background.
+Make process daemon and start to run in the background.
 
   Arguments
-    | If argument 1 'nochdir' is False, the process changes the calling process's current working directory to the root directory ("/");
+    | If argument 1 'nochdir' is False, the process changes the calling
+    | process's current working directory to the root directory ("/");
     | otherwise, the current working directory is left unchanged.
     | The default value of the nochdir is False.
 
-    | If argument 2 'noclose' is False, this function close file descriptors 0, 1 and 2 and redirect them to /dev/null.
-    | Even if some of them have been closed, this function open these file descriptors and redirect to /dev/null if noclose is False.
+    | If argument 2 'noclose' is False, this function close file descriptors 0,
+    | 1 and 2 and redirect them to /dev/null. Even if some of them have been
+    | closed, this function open these file descriptors and redirect to
+    | /dev/null if noclose is False.
     | The defult value of noclose is False.
 
   Return Value
     daemon returns the pid of new process.
 
   Note
-    | This function call fork internally to detach tty safely.
-    | Be careful to call this function when two or more than two python threads are running.
+    | This function calls os.fork() internally to detach tty safely.
+    | Be careful to call this function when two or more than two python threads
+    | are running.
 
-    | Normary, file descriptors 0, 1 and 2 are correspond to stdin, stdout and stderr.
-    | However, even if any of these file discriptors refer to something else, they will still be closed when argument 'noclose' is False.
+    | Normary, file descriptors 0, 1 and 2 are correspond to stdin, stdout and
+    | stderr. However, even if any of these file discriptors refer to something
+    | else, they will still be closed when argument 'noclose' is False.
 
-    | It is a good idea to call this function before creating any threads and before opening any files or sockets.
+    | It is a good idea to call this function before creating any threads and
+    | before opening any files or sockets.
 
   Example
-    Call unix_daemon.daemon(), then the process run backgrond.
+    Call unix_daemon.daemon(), then the process starts to run in the backgrond.
 
     ::
 

@@ -25,7 +25,7 @@ __all__ = ['daemon']
 
 
 def daemon(nochdir=False, noclose=False):
-    r''' Fork twice and become a daemon.
+    r''' Make process daemon and start to run in the background.
 
     If argument `nochdir' is False, this process changes the calling process's
     current working directory to the root directory ("/");
@@ -40,7 +40,7 @@ def daemon(nochdir=False, noclose=False):
 
     This function returns the pid of new process.
 
-    This function call fork internally to detach tty safely.
+    This function calls os.fork() internally to detach tty safely.
     Be careful to call this function when two or more than two python threads
     are running.
 
@@ -52,18 +52,18 @@ def daemon(nochdir=False, noclose=False):
     before opening any files or sockets.
     '''
 
-    ## 1st fork
+    # 1st fork
     pid = os.fork()
     if pid != 0:
         os.waitpid(pid, os.P_WAIT)
         os._exit(0)
 
-    ## 2nd fork
+    # 2nd fork
     os.setsid()
     if os.fork() != 0:
         os._exit(0)
 
-    ## daemon process
+    # daemon process
     # ch '/'
     if not nochdir:
         os.chdir('/')
