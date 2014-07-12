@@ -1,13 +1,16 @@
 #!/bin/bash
 
-which pep8 >/dev/null || exit $?
-which pyflakes >/dev/null || exit $?
+set -e
+
+which pep8 >/dev/null
+which pyflakes >/dev/null
 
 (
-cd $(git rev-parse --show-toplevel)
-pep8 src setup.py || exit $?
-pyflakes src setup.py || exit $?
-python setup.py check -r || exit $?
+    cd $(git rev-parse --show-toplevel)
+    pep8 src setup.py
+    pyflakes src setup.py
+    doc8 docs
+    python setup.py check -r
 )
 
 exit 0
