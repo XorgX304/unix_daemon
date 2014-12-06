@@ -15,8 +15,32 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 '''
-
+import sys
 from setuptools import setup
+from setuptools.command.test import test as TestCommand
+
+
+class Tox(TestCommand):
+    user_options = [('tox-args=', 'a', 'Arguments to pass to tox')]
+
+    def initialize_options(self):
+        TestCommand.initialize_options(self)
+        self.tox_args = None
+
+    def finalize_options(self):
+        TestCommand.finalize_options(self)
+        self.test_args = []
+        self.test_suite = True
+
+    def run_tests(self):
+        import tox
+        import shlex
+        if self.tox_args:
+            errno = tox.cmdline(args=shlex.split(self.tox_args))
+        else:
+            errno = tox.cmdline(self.test_args)
+        sys.exit(errno)
+
 
 long_description = open('docs/README.rst').read()
 
@@ -51,4 +75,6 @@ setup(
     package_dir={"": "src"},
     license=['Apache License 2.0'],
     classifiers=classifiers,
+    tests_require=['tox'],
+    cmdclass={'test': Tox},
 )
